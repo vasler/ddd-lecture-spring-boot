@@ -12,9 +12,6 @@ public class IndexController {
     @ResponseBody
     public String index() {
         return HtmlFragments.PAGE_HEADER +
-            """
-                <div hx-get="/ui/testers" hx-trigger="load" class="bg-grey-100 p-4 mt-2 border rounded-lg max-w-4xl m-auto"></div>
-                <img src="/static/img/loader.gif" width="50" height="50">INDEX""" +
             HtmlFragments.PAGE_FOOTER;
     }
 

@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/").authenticated()
                 .requestMatchers("/ui").authenticated()
                 .requestMatchers("/ui/**").authenticated())
-            .formLogin(formLogin -> formLogin.defaultSuccessUrl("/ui/testers", true));
+            .formLogin(formLogin -> formLogin.defaultSuccessUrl("/ui", true));
         return http.build();
     }
 
