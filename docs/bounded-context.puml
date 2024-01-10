@@ -1,0 +1,31 @@
+@startuml
+
+component "Bounded Context" as b {
+    component "Aggregate" as a1
+    component "Aggregate" as a2
+    component "Aggregate" as a3
+    component "Aggregate" as a4
+
+    a1 .right. a2
+    a1 .. a3
+    a2 .. a3
+    a3 .. a4
+
+    note bottom of a3
+        Bounded Context is a logical unit in the solution space that should ideally
+        map to one Subdomain in the problem space (the Business Domain).
+        Examples: Shipping, Accounting, CRM, etc.
+
+        Bounded Contexts are often implemented as microservices in the
+        Microservice Oriented Architecture or as modules in Modular Monoliths.
+
+        Each Bounded Context has a Ubiquitous Language which is a natural language
+        defined by the Business Domain and should be used everywhere inside the
+        Bounded Context, including the code.
+
+        Bounded Context is divided into Aggregates which are highly cohesive
+        transactional units associated with each other.
+    end note
+}
+
+@enduml

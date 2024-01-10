@@ -1,0 +1,43 @@
+@startuml
+
+component Aggregate {
+    component "<<Entity>>\nAggregate Root" as root
+    component "Entity" as e1
+    component "Entity" as e2
+    component "Value Object" as vo
+
+    root *-down- "0..*" e1
+    root *-down- "0..*" e2
+    e1 *-down- "0..*" vo
+
+    note bottom of e2
+        Aggregate represents a highly cohesive transactional unit.
+        Two aggregates should not commit in one transaction if it can be avoided.
+        Patterns such as Domain Events (eventual consistency) can be used to accomplish that.
+
+        Aggregate has at least one entity representing the root of the aggregate.
+
+        Aggregate may contain any number of child entities, although that number
+        should be kept as small as possible.
+
+        Child entities should be referenced only by the Aggregate Root.
+
+        Only the aggregate root may expose public methods.
+        The public methods should should represent domain actions.
+
+        Exposing setters is prohibited.
+        Getters should be exposed only to Domain Services if necessary but should be avoided
+        in favor of patterns such as the Strategy Pattern.
+
+        Entity in a mutable object that has an identity, it contains data and business methods
+        and it may contain Value Objects.
+
+        Value Object is immutable and has no identity, it contains data and business methods.
+          Example: Money object that contains Amount and Currency fields and has methods
+          for numerical operations (add, subtract, percentage operations) and for conversion
+          between different currencies.
+    end note
+
+}
+
+@enduml
