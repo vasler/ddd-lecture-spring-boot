@@ -1,4 +1,8 @@
 @startuml
+skinparam componentstyle uml2
+skinparam defaultTextAlignment center
+skinparam noteTextAlignment left
+' left to right direction
 
 component "Bounded Context" as b {
     component "Aggregate" as a1

@@ -1,0 +1,43 @@
+@startuml
+
+|Passenger|
+:Enter credentials;
+
+|Application|
+:Authenticate user;
+
+if (Authenticated) then (yes)
+    |Passenger|
+    :Ride search form displayed;
+else (no)
+    :Error page displayed;
+    |Passenger|
+    stop
+endif
+
+|Passenger|
+:Enters ride details;
+
+|Application|
+:Find rides;
+
+if (Rides found) (yes)
+    |Passenger|
+    :Rides displayed;
+else
+    |Passenger|
+    :Ride search form displayed;
+    stop
+endif
+
+|Passenger|
+:Selects ride;
+
+|Application|
+:Commit ride selection;
+
+|Passenger|
+:Ride selection confirmation dispayed;
+
+stop
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+
+|Driver|
+:Enter credentials;
+
+|Application|
+:Authenticate user;
+
+if (Authenticated) then (yes)
+    |Driver|
+    :Offered rides displayed\nand menu displayed;
+else (no)
+    :Error page displayed;
+    |Driver|
+    stop
+endif
+
+|Application|
+:Offer new ride action selected;
+
+|Driver|
+:New ride form displayed;
+:Enters ride details;
+
+|Application|
+:Validate ride details;
+:Store ride details;
+
+|Driver|
+:Display new ride confirmation;
+
+stop
+@enduml
