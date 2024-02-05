@@ -1,5 +1,8 @@
 package vasler.dddlecture.adapters.primary.htmx;
 
+import org.springframework.context.annotation.Role;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,11 @@ public class IndexController {
     @GetMapping("/error")
     @ResponseBody
     public String error() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        boolean hasUserRole = authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals("ROLE_USER"));
+
         return HtmlFragments.PAGE_HEADER +
 
             """

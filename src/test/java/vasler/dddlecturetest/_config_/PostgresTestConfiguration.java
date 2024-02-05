@@ -1,4 +1,4 @@
-package vasler.dddlecture._config_;
+package vasler.dddlecturetest._config_;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

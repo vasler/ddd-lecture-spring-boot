@@ -1,13 +1,14 @@
-package vasler.dddlecture;
+package vasler.dddlecturetest;
 
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Commit;
-import vasler.dddlecture._config_.PostgresTestConfiguration;
+import vasler.dddlecturetest._config_.PostgresTestConfiguration;
+import vasler.dddlecturetest._config_.TestConfig;
 
-@SpringBootTest(webEnvironment = org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = TestConfig.class, webEnvironment = org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Import(PostgresTestConfiguration.class)
 class IntegrationTest {
