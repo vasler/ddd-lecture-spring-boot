@@ -23,13 +23,16 @@ public class TripCreationRequest {
     @NotNull
     private final UUID driver;
 
-    private static class CustomTripRequestBuilder extends TripCreationRequestBuilder {
+    public static TripCreationRequestBuilder builder() {
+        return new CustomTripCreationRequestBuilder();
+    }
+
+    private static class CustomTripCreationRequestBuilder extends TripCreationRequestBuilder {
         @Override
         public TripCreationRequest build() {
             var tripCreationRequest = super.build();
 
-            var errors = BeanValidator.validate(tripCreationRequest);
-            if (!errors.isEmpty()) throw new TripCreationException();
+            BeanValidator.validateThrow(tripCreationRequest);
 
             return tripCreationRequest;
         }
