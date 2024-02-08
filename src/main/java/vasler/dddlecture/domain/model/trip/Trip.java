@@ -8,9 +8,12 @@ import org.jmolecules.ddd.types.Association;
 import org.jmolecules.ddd.types.Identifier;
 import vasler.dddlecture.domain.model.driver.Driver;
 import vasler.dddlecture.domain.model.driver.DriverAssociationConverter;
+import vasler.dddlecture.ports.primary.driver.dto.RideOfferingRequest;
+import vasler.dddlecture.ports.secondary.repository.RideOffers;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
@@ -27,11 +30,16 @@ public class Trip implements AggregateRoot<Trip, Trip.TripId> {
     @EmbeddedId
     private final TripId id;
 
+    @OneToMany(mappedBy = "trip_id")
+    private Set<RideOffer> rideOffers;
+
     private String origin;
     private String destination;
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
 
+    @Getter
+    @Column(name =  "driver_id")
     @Convert(converter = DriverAssociationConverter.class)
     private Association<Driver, Driver.DriverId> driver;
 
@@ -40,4 +48,14 @@ public class Trip implements AggregateRoot<Trip, Trip.TripId> {
 
     @Version
     private Integer version;
+
+    // DOMAIN METHODS
+    public void offerRide(RideOfferingRequest request) {
+        var rideOffer = RideOffer.builder()
+                .seats(4)
+                .id(new RideOffer.RideOfferId(UUID.randomUUID()))
+                .build();
+
+        rideOffers.add(rideOffer);
+    }
 }

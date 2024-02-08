@@ -1,9 +1,14 @@
 package vasler.dddlecture.service.driver;
 
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.ddd.types.Association;
 import org.springframework.stereotype.Service;
+import vasler.dddlecture.domain.model.driver.Driver;
+import vasler.dddlecture.domain.model.trip.RideOffer;
 import vasler.dddlecture.domain.model.trip.Trip;
 import vasler.dddlecture.ports.primary.driver.TripUseCase;
+import vasler.dddlecture.ports.primary.driver.dto.RideOfferingRequest;
+import vasler.dddlecture.ports.primary.driver.dto.RideOfferingResult;
 import vasler.dddlecture.ports.primary.driver.dto.TripCreationRequest;
 import vasler.dddlecture.ports.primary.driver.dto.TripCreationResult;
 import vasler.dddlecture.ports.secondary.repository.Trips;
@@ -22,7 +27,7 @@ public class TripService implements TripUseCase {
                 .origin(tripCreationRequest.getOrigin())
                 .destination(tripCreationRequest.getDestination())
                 .departureTime(tripCreationRequest.getDepartureTime())
-                .driver(null)
+                .driver(Association.forId(new Driver.DriverId(tripCreationRequest.getDriver())))
                 .updateTime(LocalDateTime.now())
                 .build();
 
@@ -31,5 +36,23 @@ public class TripService implements TripUseCase {
 
 
         return null;
+    }
+
+    @Override
+    public RideOfferingResult offerRide(RideOfferingRequest rideOfferingRequest) {
+        var trip = trips.findById(new Trip.TripId(rideOfferingRequest.getTrip()));
+        if (trip.isEmpty()) {
+            return RideOfferingResult.builder()
+                    .success(false)
+                    .message("Trip not found")
+                    .build();
+        }
+
+        trip.get().offerRide(rideOfferingRequest);
+
+        return RideOfferingResult.builder()
+                .success(true)
+                .message("SUCCESS")
+                .build();
     }
 }

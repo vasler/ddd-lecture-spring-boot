@@ -1,6 +1,8 @@
 package vasler.dddlecture.domain.model.driver;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jmolecules.ddd.types.AggregateRoot;
@@ -23,6 +25,13 @@ public class Driver implements AggregateRoot<Driver, Driver.DriverId> {
     @Getter
     @EmbeddedId
     private final DriverId id;
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    @Email
+    private String email;
 
 
     @Version

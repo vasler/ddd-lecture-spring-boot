@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 
-import java.util.UUID;
-
 @Value
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class TripCreationResult {
-    private final UUID tripId;
+public class RideOfferingResult {
+    private final boolean success;
     private final String message;
 }
