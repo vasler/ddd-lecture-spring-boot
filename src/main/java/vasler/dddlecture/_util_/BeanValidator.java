@@ -34,18 +34,17 @@ public class BeanValidator {
         return errors;
     }
 
-    public static <T> void validateThrow(T t) throws ValueValidationException {
+    public static <T> T validateAndThrow(T t) throws ValueValidationException {
         var errors = SpringContext.getBean(Validator.class).validate(t);
         if (!errors.isEmpty()) {
             if (log.isDebugEnabled()) {
                 errors.forEach((e) -> {
-                        new ValueValidationException.PropertyError(
-                            e.getPropertyPath().toString(),
-                            Optional.ofNullable(e.getInvalidValue()).orElse("NULL").toString(),
-                            e.getMessage()
-                        );
-                    }
-                );
+                    log.debug("-- Property '{}' has invalid value '{}' with validation message '{}'.",
+                        e.getPropertyPath().toString(),
+                        Optional.ofNullable(e.getInvalidValue()).orElse("NULL").toString(),
+                        e.getMessage()
+                    );
+                });
             }
 
             List<ValueValidationException.PropertyError> propertyErrors = new ArrayList<>();
@@ -61,5 +60,7 @@ public class BeanValidator {
 
             throw new ValueValidationException("Value validation failed", propertyErrors);
         }
+
+        return t;
     }
 }

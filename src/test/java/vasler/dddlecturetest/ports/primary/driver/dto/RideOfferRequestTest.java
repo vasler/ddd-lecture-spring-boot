@@ -7,23 +7,22 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import vasler.dddlecture.ports.primary.ValueValidationException;
-import vasler.dddlecture.ports.primary.driver.dto.RideOfferingRequest;
-import vasler.dddlecture.ports.primary.driver.dto.TripCreationRequest;
+import vasler.dddlecture.ports.primary.driver.dto.RideOfferRequest;
 import vasler.dddlecturetest._config_.PostgresTestConfiguration;
 import vasler.dddlecturetest._config_.TestConfig;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @SpringBootTest(classes = TestConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Import(PostgresTestConfiguration.class)
-public class RideOfferingRequestTest {
+public class RideOfferRequestTest {
 
     @Test
     public void givenArgumentsValid_whenBuildingRideOfferingRequest_NoExceptionThrown() {
-        Assertions.assertDoesNotThrow(() -> RideOfferingRequest.builder()
-            .seats(20)
+        Assertions.assertDoesNotThrow(() -> RideOfferRequest.builder()
+            .offeredSeatCount(20)
+            .trip(UUID.randomUUID())
             .build()
         );
     }
@@ -31,9 +30,10 @@ public class RideOfferingRequestTest {
     @Test
     public void givenNumberOfSeatsTooLarge_whenBuildingRideOfferingRequest_NoExceptionThrown() {
         ValueValidationException exception = Assertions.assertThrows(ValueValidationException.class,
-                () -> RideOfferingRequest.builder()
-                        .seats(50)
-                        .build()
+            () -> RideOfferRequest.builder()
+                .offeredSeatCount(50)
+                .trip(UUID.randomUUID())
+                .build()
         );
 
         Assertions.assertEquals(1, exception.getPropertyErrors().size());
@@ -42,8 +42,8 @@ public class RideOfferingRequestTest {
     @Test
     public void givenArgumentsNull_whenBuildingRideOfferinngRequest_ExceptionThrownWithCorrectNumberOfPropertyErrors() {
         ValueValidationException exception = Assertions.assertThrows(ValueValidationException.class,
-            () -> RideOfferingRequest.builder().build());
+            () -> RideOfferRequest.builder().build());
 
-        Assertions.assertEquals(1, exception.getPropertyErrors().size());
+        Assertions.assertEquals(2, exception.getPropertyErrors().size());
     }
 }

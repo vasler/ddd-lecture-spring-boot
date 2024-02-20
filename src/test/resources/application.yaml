@@ -17,6 +17,7 @@ spring:
 
 logging:
   level:
+    vasler: DEBUG
     org.jmolecules: DEBUG
     org.hibernate.sql: DEBUG
     org.hibernate.type.descriptor.sql: TRACE

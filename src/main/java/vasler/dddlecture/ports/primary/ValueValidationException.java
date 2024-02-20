@@ -1,6 +1,5 @@
 package vasler.dddlecture.ports.primary;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;

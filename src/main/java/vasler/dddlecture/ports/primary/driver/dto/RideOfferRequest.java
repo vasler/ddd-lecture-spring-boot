@@ -14,26 +14,27 @@ import java.util.UUID;
 @Value
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class RideOfferingRequest {
+public class RideOfferRequest
+{
     @Min(1)
     @Max(40)
-    private final int seats;
+    private final int offeredSeatCount;
 
     @NotNull
     private final UUID trip;
 
-    public static RideOfferingRequestBuilder builder() {
-        return new RideOfferingRequest.CustomRideOfferingRequestBuilder();
+    public static RideOfferRequestBuilder builder()
+    {
+        return new RideOfferRequest.CustomRideOfferRequestBuilder();
     }
 
-    private static class CustomRideOfferingRequestBuilder extends RideOfferingRequest.RideOfferingRequestBuilder {
+    private static class CustomRideOfferRequestBuilder
+        extends RideOfferRequest.RideOfferRequestBuilder
+    {
         @Override
-        public RideOfferingRequest build() {
-            var rideOfferingRequest = super.build();
-
-            BeanValidator.validateThrow(rideOfferingRequest);
-
-            return rideOfferingRequest;
+        public RideOfferRequest build()
+        {
+            return BeanValidator.validateAndThrow(super.build());
         }
     }
 }

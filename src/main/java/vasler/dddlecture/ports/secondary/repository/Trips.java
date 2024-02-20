@@ -11,4 +11,5 @@ import java.util.Set;
 
 public interface Trips extends CrudRepository<Trip, Trip.TripId>, AssociationResolver<Trip, Trip.TripId> {
     Set<Trip> findByDriver(Association<Driver, Driver.DriverId> driver);
+    Optional<Trip> findByDriverAndRequestId(Association<Driver, Driver.DriverId> driver, String requestId);
 }

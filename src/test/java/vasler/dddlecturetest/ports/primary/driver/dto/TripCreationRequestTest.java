@@ -25,7 +25,9 @@ public class TripCreationRequestTest {
             .origin("origin")
             .destination("destination")
             .departureTime(LocalDateTime.now())
+            .arrivalTime(LocalDateTime.now())
             .driver(UUID.randomUUID())
+            .requestId(UUID.randomUUID().toString())
             .build()
         );
     }
@@ -35,6 +37,6 @@ public class TripCreationRequestTest {
         ValueValidationException exception = Assertions.assertThrows(ValueValidationException.class,
             () -> TripCreationRequest.builder().build());
 
-        Assertions.assertEquals(4, exception.getPropertyErrors().size());
+        Assertions.assertEquals(6, exception.getPropertyErrors().size());
     }
 }
